@@ -1,0 +1,688 @@
+
+screen.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000002a0  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000005a  00800060  000002a0  00000334  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000002  008000ba  008000ba  0000038e  2**0
+                  ALLOC
+  3 .debug_aranges 00000020  00000000  00000000  0000038e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_pubnames 0000008a  00000000  00000000  000003ae  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000006db  00000000  00000000  00000438  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000189  00000000  00000000  00000b13  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000004fd  00000000  00000000  00000c9c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000080  00000000  00000000  0000119c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000126  00000000  00000000  0000121c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000221  00000000  00000000  00001342  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000048  00000000  00000000  00001563  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	2c c0       	rjmp	.+88     	; 0x5c <__bad_interrupt>
+   4:	2b c0       	rjmp	.+86     	; 0x5c <__bad_interrupt>
+   6:	2a c0       	rjmp	.+84     	; 0x5c <__bad_interrupt>
+   8:	29 c0       	rjmp	.+82     	; 0x5c <__bad_interrupt>
+   a:	28 c0       	rjmp	.+80     	; 0x5c <__bad_interrupt>
+   c:	27 c0       	rjmp	.+78     	; 0x5c <__bad_interrupt>
+   e:	26 c0       	rjmp	.+76     	; 0x5c <__bad_interrupt>
+  10:	25 c0       	rjmp	.+74     	; 0x5c <__bad_interrupt>
+  12:	24 c0       	rjmp	.+72     	; 0x5c <__bad_interrupt>
+  14:	23 c0       	rjmp	.+70     	; 0x5c <__bad_interrupt>
+  16:	22 c0       	rjmp	.+68     	; 0x5c <__bad_interrupt>
+  18:	21 c0       	rjmp	.+66     	; 0x5c <__bad_interrupt>
+  1a:	20 c0       	rjmp	.+64     	; 0x5c <__bad_interrupt>
+  1c:	1f c0       	rjmp	.+62     	; 0x5c <__bad_interrupt>
+  1e:	1e c0       	rjmp	.+60     	; 0x5c <__bad_interrupt>
+  20:	1d c0       	rjmp	.+58     	; 0x5c <__bad_interrupt>
+  22:	1c c0       	rjmp	.+56     	; 0x5c <__bad_interrupt>
+  24:	1b c0       	rjmp	.+54     	; 0x5c <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	e0 ea       	ldi	r30, 0xA0	; 160
+  3a:	f2 e0       	ldi	r31, 0x02	; 2
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <.do_copy_data_start>
+
+0000003e <.do_copy_data_loop>:
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+
+00000042 <.do_copy_data_start>:
+  42:	aa 3b       	cpi	r26, 0xBA	; 186
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <.do_copy_data_loop>
+
+00000048 <__do_clear_bss>:
+  48:	10 e0       	ldi	r17, 0x00	; 0
+  4a:	aa eb       	ldi	r26, 0xBA	; 186
+  4c:	b0 e0       	ldi	r27, 0x00	; 0
+  4e:	01 c0       	rjmp	.+2      	; 0x52 <.do_clear_bss_start>
+
+00000050 <.do_clear_bss_loop>:
+  50:	1d 92       	st	X+, r1
+
+00000052 <.do_clear_bss_start>:
+  52:	ac 3b       	cpi	r26, 0xBC	; 188
+  54:	b1 07       	cpc	r27, r17
+  56:	e1 f7       	brne	.-8      	; 0x50 <.do_clear_bss_loop>
+  58:	8a d0       	rcall	.+276    	; 0x16e <main>
+  5a:	20 c1       	rjmp	.+576    	; 0x29c <_exit>
+
+0000005c <__bad_interrupt>:
+  5c:	d1 cf       	rjmp	.-94     	; 0x0 <__vectors>
+
+0000005e <screenCommand>:
+
+// Send command to screen using standard delay
+void screenCommand(char i)
+{
+	// Set PORT
+	PORTC &= ~_BV(PC0);	// RS = 0
+  5e:	a8 98       	cbi	0x15, 0	; 21
+	PORTC &= ~_BV(PC1);	// RW = 0
+  60:	a9 98       	cbi	0x15, 1	; 21
+	PORTD = i;
+  62:	82 bb       	out	0x12, r24	; 18
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+  64:	80 e2       	ldi	r24, 0x20	; 32
+  66:	9e e4       	ldi	r25, 0x4E	; 78
+  68:	fc 01       	movw	r30, r24
+  6a:	31 97       	sbiw	r30, 0x01	; 1
+  6c:	f1 f7       	brne	.-4      	; 0x6a <screenCommand+0xc>
+	_delay_ms(screenDelay);
+
+	// Enable 0>1>0
+	PORTC |= _BV(PC2);
+  6e:	aa 9a       	sbi	0x15, 2	; 21
+  70:	fc 01       	movw	r30, r24
+  72:	31 97       	sbiw	r30, 0x01	; 1
+  74:	f1 f7       	brne	.-4      	; 0x72 <screenCommand+0x14>
+	_delay_ms(screenDelay);
+	PORTC &= ~_BV(PC2);
+  76:	aa 98       	cbi	0x15, 2	; 21
+  78:	01 97       	sbiw	r24, 0x01	; 1
+  7a:	f1 f7       	brne	.-4      	; 0x78 <screenCommand+0x1a>
+	_delay_ms(screenDelay);
+}
+  7c:	08 95       	ret
+
+0000007e <screenPos>:
+
+void screenPos(unsigned int position)
+{
+	// Set PORT
+	PORTC &= ~_BV(PC0);	// RS = 0
+  7e:	a8 98       	cbi	0x15, 0	; 21
+	PORTC &= ~_BV(PC1);	// RW = 0
+  80:	a9 98       	cbi	0x15, 1	; 21
+	PORTD = 0b10000000 | position;
+  82:	28 2f       	mov	r18, r24
+  84:	20 68       	ori	r18, 0x80	; 128
+  86:	22 bb       	out	0x12, r18	; 18
+	charAddress = position;
+  88:	90 93 bb 00 	sts	0x00BB, r25
+  8c:	80 93 ba 00 	sts	0x00BA, r24
+  90:	80 e2       	ldi	r24, 0x20	; 32
+  92:	9e e4       	ldi	r25, 0x4E	; 78
+  94:	fc 01       	movw	r30, r24
+  96:	31 97       	sbiw	r30, 0x01	; 1
+  98:	f1 f7       	brne	.-4      	; 0x96 <screenPos+0x18>
+	_delay_ms(screenDelay);
+
+	// Enable 0>1>0
+	PORTC |= _BV(PC2);
+  9a:	aa 9a       	sbi	0x15, 2	; 21
+  9c:	fc 01       	movw	r30, r24
+  9e:	31 97       	sbiw	r30, 0x01	; 1
+  a0:	f1 f7       	brne	.-4      	; 0x9e <screenPos+0x20>
+	_delay_ms(screenDelay);
+	PORTC &= ~_BV(PC2);
+  a2:	aa 98       	cbi	0x15, 2	; 21
+  a4:	01 97       	sbiw	r24, 0x01	; 1
+  a6:	f1 f7       	brne	.-4      	; 0xa4 <screenPos+0x26>
+	_delay_ms(screenDelay);	
+}
+  a8:	08 95       	ret
+
+000000aa <screenWrite>:
+
+
+void screenWrite(char i)
+{
+  aa:	1f 93       	push	r17
+  ac:	18 2f       	mov	r17, r24
+	// Check if screen has reached address limit
+	if(charAddress==0x10)
+  ae:	80 91 ba 00 	lds	r24, 0x00BA
+  b2:	90 91 bb 00 	lds	r25, 0x00BB
+  b6:	40 97       	sbiw	r24, 0x10	; 16
+  b8:	39 f4       	brne	.+14     	; 0xc8 <screenWrite+0x1e>
+	{	
+		charAddress = 0x40;
+  ba:	80 e4       	ldi	r24, 0x40	; 64
+  bc:	90 e0       	ldi	r25, 0x00	; 0
+  be:	90 93 bb 00 	sts	0x00BB, r25
+  c2:	80 93 ba 00 	sts	0x00BA, r24
+  c6:	0d c0       	rjmp	.+26     	; 0xe2 <screenWrite+0x38>
+		screenPos(0x40);
+	}
+	else if(charAddress==0x50)
+  c8:	80 91 ba 00 	lds	r24, 0x00BA
+  cc:	90 91 bb 00 	lds	r25, 0x00BB
+  d0:	80 35       	cpi	r24, 0x50	; 80
+  d2:	91 05       	cpc	r25, r1
+  d4:	39 f4       	brne	.+14     	; 0xe4 <screenWrite+0x3a>
+	{	
+		charAddress = 0x00;
+  d6:	10 92 bb 00 	sts	0x00BB, r1
+  da:	10 92 ba 00 	sts	0x00BA, r1
+		screenPos(0x00);
+  de:	80 e0       	ldi	r24, 0x00	; 0
+  e0:	90 e0       	ldi	r25, 0x00	; 0
+  e2:	cd df       	rcall	.-102    	; 0x7e <screenPos>
+	}
+
+	// Set PORT
+	PORTC |= _BV(PC0);	// RS = 1
+  e4:	a8 9a       	sbi	0x15, 0	; 21
+	PORTC &= ~_BV(PC1);	// RW = 0
+  e6:	a9 98       	cbi	0x15, 1	; 21
+	PORTD = i;
+  e8:	12 bb       	out	0x12, r17	; 18
+	charAddress++;
+  ea:	80 91 ba 00 	lds	r24, 0x00BA
+  ee:	90 91 bb 00 	lds	r25, 0x00BB
+  f2:	01 96       	adiw	r24, 0x01	; 1
+  f4:	90 93 bb 00 	sts	0x00BB, r25
+  f8:	80 93 ba 00 	sts	0x00BA, r24
+  fc:	80 e2       	ldi	r24, 0x20	; 32
+  fe:	9e e4       	ldi	r25, 0x4E	; 78
+ 100:	fc 01       	movw	r30, r24
+ 102:	31 97       	sbiw	r30, 0x01	; 1
+ 104:	f1 f7       	brne	.-4      	; 0x102 <screenWrite+0x58>
+	_delay_ms(screenDelay);
+
+	// Enable 0>1>0
+	PORTC |= _BV(PC2);
+ 106:	aa 9a       	sbi	0x15, 2	; 21
+ 108:	fc 01       	movw	r30, r24
+ 10a:	31 97       	sbiw	r30, 0x01	; 1
+ 10c:	f1 f7       	brne	.-4      	; 0x10a <screenWrite+0x60>
+	_delay_ms(screenDelay);
+	PORTC &= ~_BV(PC2);
+ 10e:	aa 98       	cbi	0x15, 2	; 21
+ 110:	01 97       	sbiw	r24, 0x01	; 1
+ 112:	f1 f7       	brne	.-4      	; 0x110 <screenWrite+0x66>
+	_delay_ms(screenDelay);	
+}
+ 114:	1f 91       	pop	r17
+ 116:	08 95       	ret
+
+00000118 <screenClear>:
+
+void screenClear()
+{
+	screenCommand(0b00000001);
+ 118:	81 e0       	ldi	r24, 0x01	; 1
+ 11a:	a1 df       	rcall	.-190    	; 0x5e <screenCommand>
+}
+ 11c:	08 95       	ret
+
+0000011e <screemReturn>:
+
+void screemReturn()
+{
+	screenCommand(13);
+ 11e:	8d e0       	ldi	r24, 0x0D	; 13
+ 120:	9e df       	rcall	.-196    	; 0x5e <screenCommand>
+}
+ 122:	08 95       	ret
+
+00000124 <screenSet>:
+
+void screenSet()
+{
+ 124:	0f 93       	push	r16
+ 126:	1f 93       	push	r17
+	// Set PORT
+	DDRD = 0xFF;
+ 128:	8f ef       	ldi	r24, 0xFF	; 255
+ 12a:	81 bb       	out	0x11, r24	; 17
+	DDRC = 0xFF;
+ 12c:	84 bb       	out	0x14, r24	; 20
+	PORTD = 0x00;
+ 12e:	12 ba       	out	0x12, r1	; 18
+	PORTC &= ~_BV(PC0);	// RS = 0
+ 130:	a8 98       	cbi	0x15, 0	; 21
+	PORTC &= ~_BV(PC1);	// RW = 0
+ 132:	a9 98       	cbi	0x15, 1	; 21
+	PORTC &= ~_BV(PC2);	//Enable = 0
+ 134:	aa 98       	cbi	0x15, 2	; 21
+ 136:	00 e4       	ldi	r16, 0x40	; 64
+ 138:	1c e9       	ldi	r17, 0x9C	; 156
+ 13a:	c8 01       	movw	r24, r16
+ 13c:	01 97       	sbiw	r24, 0x01	; 1
+ 13e:	f1 f7       	brne	.-4      	; 0x13c <screenSet+0x18>
+	_delay_ms(20);
+
+	// WakeUp 1,2 and 3
+	screenCommand(0b00110000);
+ 140:	80 e3       	ldi	r24, 0x30	; 48
+ 142:	8d df       	rcall	.-230    	; 0x5e <screenCommand>
+ 144:	c8 01       	movw	r24, r16
+ 146:	01 97       	sbiw	r24, 0x01	; 1
+ 148:	f1 f7       	brne	.-4      	; 0x146 <screenSet+0x22>
+	_delay_ms(20);
+	screenCommand(0b00110000);
+ 14a:	80 e3       	ldi	r24, 0x30	; 48
+ 14c:	88 df       	rcall	.-240    	; 0x5e <screenCommand>
+ 14e:	c8 01       	movw	r24, r16
+ 150:	01 97       	sbiw	r24, 0x01	; 1
+ 152:	f1 f7       	brne	.-4      	; 0x150 <screenSet+0x2c>
+	_delay_ms(20);
+	screenCommand(0b00110000);
+ 154:	80 e3       	ldi	r24, 0x30	; 48
+ 156:	83 df       	rcall	.-250    	; 0x5e <screenCommand>
+ 158:	c8 01       	movw	r24, r16
+ 15a:	01 97       	sbiw	r24, 0x01	; 1
+ 15c:	f1 f7       	brne	.-4      	; 0x15a <screenSet+0x36>
+	_delay_ms(20);
+
+	// Set
+	screenCommand(0b00111111);
+ 15e:	8f e3       	ldi	r24, 0x3F	; 63
+ 160:	7e df       	rcall	.-260    	; 0x5e <screenCommand>
+	screenCommand(0b00001100);
+ 162:	8c e0       	ldi	r24, 0x0C	; 12
+ 164:	7c df       	rcall	.-264    	; 0x5e <screenCommand>
+	screenClear();
+ 166:	d8 df       	rcall	.-80     	; 0x118 <screenClear>
+}
+ 168:	1f 91       	pop	r17
+ 16a:	0f 91       	pop	r16
+ 16c:	08 95       	ret
+
+0000016e <main>:
+#define sleep1 1500
+#define screenDelay 10
+#include "screenControl.h"
+
+int main()
+{
+ 16e:	0f 93       	push	r16
+ 170:	1f 93       	push	r17
+ 172:	cf 93       	push	r28
+ 174:	df 93       	push	r29
+	screenSet();
+ 176:	d6 df       	rcall	.-84     	; 0x124 <screenSet>
+ 178:	08 ec       	ldi	r16, 0xC8	; 200
+ 17a:	10 e0       	ldi	r17, 0x00	; 0
+	while(1)
+	{
+		screenPos(6);
+ 17c:	86 e0       	ldi	r24, 0x06	; 6
+ 17e:	90 e0       	ldi	r25, 0x00	; 0
+ 180:	7e df       	rcall	.-260    	; 0x7e <screenPos>
+ 182:	c0 e6       	ldi	r28, 0x60	; 96
+ 184:	d0 e0       	ldi	r29, 0x00	; 0
+ 186:	02 c0       	rjmp	.+4      	; 0x18c <main+0x1e>
+		char*  text1="IEEE\n";	
+		for(int i=0; i<strlen(text1)-1; i++)
+		{
+			screenWrite(text1[i]);
+ 188:	89 91       	ld	r24, Y+
+ 18a:	8f df       	rcall	.-226    	; 0xaa <screenWrite>
+	screenSet();
+	while(1)
+	{
+		screenPos(6);
+		char*  text1="IEEE\n";	
+		for(int i=0; i<strlen(text1)-1; i++)
+ 18c:	80 e0       	ldi	r24, 0x00	; 0
+ 18e:	c4 36       	cpi	r28, 0x64	; 100
+ 190:	d8 07       	cpc	r29, r24
+ 192:	d1 f7       	brne	.-12     	; 0x188 <main+0x1a>
+		{
+			screenWrite(text1[i]);
+		}
+		screenPos(67);
+ 194:	83 e4       	ldi	r24, 0x43	; 67
+ 196:	90 e0       	ldi	r25, 0x00	; 0
+ 198:	72 df       	rcall	.-284    	; 0x7e <screenPos>
+ 19a:	c6 e6       	ldi	r28, 0x66	; 102
+ 19c:	d0 e0       	ldi	r29, 0x00	; 0
+ 19e:	02 c0       	rjmp	.+4      	; 0x1a4 <main+0x36>
+
+		text1="Concordia\n";	
+		for(int i=0; i<strlen(text1)-1; i++)
+		{
+			screenWrite(text1[i]);
+ 1a0:	89 91       	ld	r24, Y+
+ 1a2:	83 df       	rcall	.-250    	; 0xaa <screenWrite>
+			screenWrite(text1[i]);
+		}
+		screenPos(67);
+
+		text1="Concordia\n";	
+		for(int i=0; i<strlen(text1)-1; i++)
+ 1a4:	80 e0       	ldi	r24, 0x00	; 0
+ 1a6:	cf 36       	cpi	r28, 0x6F	; 111
+ 1a8:	d8 07       	cpc	r29, r24
+ 1aa:	d1 f7       	brne	.-12     	; 0x1a0 <main+0x32>
+ 1ac:	88 e9       	ldi	r24, 0x98	; 152
+ 1ae:	9a e3       	ldi	r25, 0x3A	; 58
+ 1b0:	f8 01       	movw	r30, r16
+ 1b2:	31 97       	sbiw	r30, 0x01	; 1
+ 1b4:	f1 f7       	brne	.-4      	; 0x1b2 <main+0x44>
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 1b6:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 1b8:	d9 f7       	brne	.-10     	; 0x1b0 <main+0x42>
+		{
+			screenWrite(text1[i]);
+		}
+		_delay_ms(sleep1);
+		screenClear();
+ 1ba:	ae df       	rcall	.-164    	; 0x118 <screenClear>
+		screenPos(0);
+ 1bc:	80 e0       	ldi	r24, 0x00	; 0
+ 1be:	90 e0       	ldi	r25, 0x00	; 0
+ 1c0:	5e df       	rcall	.-324    	; 0x7e <screenPos>
+	
+		//Clear Screen
+
+		screenPos(2);
+ 1c2:	82 e0       	ldi	r24, 0x02	; 2
+ 1c4:	90 e0       	ldi	r25, 0x00	; 0
+ 1c6:	5b df       	rcall	.-330    	; 0x7e <screenPos>
+ 1c8:	c1 e7       	ldi	r28, 0x71	; 113
+ 1ca:	d0 e0       	ldi	r29, 0x00	; 0
+ 1cc:	02 c0       	rjmp	.+4      	; 0x1d2 <main+0x64>
+		text1="Institute of\n";	
+		for(int i=0; i<strlen(text1)-1; i++)
+		{
+			screenWrite(text1[i]);
+ 1ce:	89 91       	ld	r24, Y+
+ 1d0:	6c df       	rcall	.-296    	; 0xaa <screenWrite>
+	
+		//Clear Screen
+
+		screenPos(2);
+		text1="Institute of\n";	
+		for(int i=0; i<strlen(text1)-1; i++)
+ 1d2:	80 e0       	ldi	r24, 0x00	; 0
+ 1d4:	cd 37       	cpi	r28, 0x7D	; 125
+ 1d6:	d8 07       	cpc	r29, r24
+ 1d8:	d1 f7       	brne	.-12     	; 0x1ce <main+0x60>
+ 1da:	88 e9       	ldi	r24, 0x98	; 152
+ 1dc:	9a e3       	ldi	r25, 0x3A	; 58
+ 1de:	f8 01       	movw	r30, r16
+ 1e0:	31 97       	sbiw	r30, 0x01	; 1
+ 1e2:	f1 f7       	brne	.-4      	; 0x1e0 <main+0x72>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 1e4:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 1e6:	d9 f7       	brne	.-10     	; 0x1de <main+0x70>
+		{
+			screenWrite(text1[i]);
+		}
+		_delay_ms(sleep1);
+		screenClear();
+ 1e8:	97 df       	rcall	.-210    	; 0x118 <screenClear>
+		screenPos(0);
+ 1ea:	80 e0       	ldi	r24, 0x00	; 0
+ 1ec:	90 e0       	ldi	r25, 0x00	; 0
+ 1ee:	47 df       	rcall	.-370    	; 0x7e <screenPos>
+
+		//Clear Screen
+
+		screenPos(1);
+ 1f0:	81 e0       	ldi	r24, 0x01	; 1
+ 1f2:	90 e0       	ldi	r25, 0x00	; 0
+ 1f4:	44 df       	rcall	.-376    	; 0x7e <screenPos>
+ 1f6:	cf e7       	ldi	r28, 0x7F	; 127
+ 1f8:	d0 e0       	ldi	r29, 0x00	; 0
+ 1fa:	02 c0       	rjmp	.+4      	; 0x200 <main+0x92>
+		text1="Electrical and\n";	
+		for(int i=0; i<strlen(text1)-1; i++)
+		{
+			screenWrite(text1[i]);
+ 1fc:	89 91       	ld	r24, Y+
+ 1fe:	55 df       	rcall	.-342    	; 0xaa <screenWrite>
+
+		//Clear Screen
+
+		screenPos(1);
+		text1="Electrical and\n";	
+		for(int i=0; i<strlen(text1)-1; i++)
+ 200:	80 e0       	ldi	r24, 0x00	; 0
+ 202:	cd 38       	cpi	r28, 0x8D	; 141
+ 204:	d8 07       	cpc	r29, r24
+ 206:	d1 f7       	brne	.-12     	; 0x1fc <main+0x8e>
+		{
+			screenWrite(text1[i]);
+		}
+		screenPos(66);
+ 208:	82 e4       	ldi	r24, 0x42	; 66
+ 20a:	90 e0       	ldi	r25, 0x00	; 0
+ 20c:	38 df       	rcall	.-400    	; 0x7e <screenPos>
+ 20e:	cf e8       	ldi	r28, 0x8F	; 143
+ 210:	d0 e0       	ldi	r29, 0x00	; 0
+ 212:	02 c0       	rjmp	.+4      	; 0x218 <main+0xaa>
+
+		text1="Electronics\n";	
+		for(int i=0; i<strlen(text1)-1; i++)
+		{
+			screenWrite(text1[i]);
+ 214:	89 91       	ld	r24, Y+
+ 216:	49 df       	rcall	.-366    	; 0xaa <screenWrite>
+			screenWrite(text1[i]);
+		}
+		screenPos(66);
+
+		text1="Electronics\n";	
+		for(int i=0; i<strlen(text1)-1; i++)
+ 218:	80 e0       	ldi	r24, 0x00	; 0
+ 21a:	ca 39       	cpi	r28, 0x9A	; 154
+ 21c:	d8 07       	cpc	r29, r24
+ 21e:	d1 f7       	brne	.-12     	; 0x214 <main+0xa6>
+ 220:	88 e9       	ldi	r24, 0x98	; 152
+ 222:	9a e3       	ldi	r25, 0x3A	; 58
+ 224:	f8 01       	movw	r30, r16
+ 226:	31 97       	sbiw	r30, 0x01	; 1
+ 228:	f1 f7       	brne	.-4      	; 0x226 <main+0xb8>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 22a:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 22c:	d9 f7       	brne	.-10     	; 0x224 <main+0xb6>
+		{
+			screenWrite(text1[i]);
+		}
+		_delay_ms(sleep1);
+		screenClear();
+ 22e:	74 df       	rcall	.-280    	; 0x118 <screenClear>
+		screenPos(0);
+ 230:	80 e0       	ldi	r24, 0x00	; 0
+ 232:	90 e0       	ldi	r25, 0x00	; 0
+ 234:	24 df       	rcall	.-440    	; 0x7e <screenPos>
+
+		//Clear Screen
+
+		screenPos(4);
+ 236:	84 e0       	ldi	r24, 0x04	; 4
+ 238:	90 e0       	ldi	r25, 0x00	; 0
+ 23a:	21 df       	rcall	.-446    	; 0x7e <screenPos>
+ 23c:	cc e9       	ldi	r28, 0x9C	; 156
+ 23e:	d0 e0       	ldi	r29, 0x00	; 0
+ 240:	02 c0       	rjmp	.+4      	; 0x246 <main+0xd8>
+		text1="Engineers\n";	
+		for(int i=0; i<strlen(text1)-1; i++)
+		{
+			screenWrite(text1[i]);
+ 242:	89 91       	ld	r24, Y+
+ 244:	32 df       	rcall	.-412    	; 0xaa <screenWrite>
+
+		//Clear Screen
+
+		screenPos(4);
+		text1="Engineers\n";	
+		for(int i=0; i<strlen(text1)-1; i++)
+ 246:	80 e0       	ldi	r24, 0x00	; 0
+ 248:	c5 3a       	cpi	r28, 0xA5	; 165
+ 24a:	d8 07       	cpc	r29, r24
+ 24c:	d1 f7       	brne	.-12     	; 0x242 <main+0xd4>
+ 24e:	88 e9       	ldi	r24, 0x98	; 152
+ 250:	9a e3       	ldi	r25, 0x3A	; 58
+ 252:	f8 01       	movw	r30, r16
+ 254:	31 97       	sbiw	r30, 0x01	; 1
+ 256:	f1 f7       	brne	.-4      	; 0x254 <main+0xe6>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 258:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 25a:	d9 f7       	brne	.-10     	; 0x252 <main+0xe4>
+		{
+			screenWrite(text1[i]);
+		}
+		_delay_ms(sleep1);
+		screenClear();
+ 25c:	5d df       	rcall	.-326    	; 0x118 <screenClear>
+		screenPos(0);
+ 25e:	80 e0       	ldi	r24, 0x00	; 0
+ 260:	90 e0       	ldi	r25, 0x00	; 0
+ 262:	0d df       	rcall	.-486    	; 0x7e <screenPos>
+ 264:	c7 ea       	ldi	r28, 0xA7	; 167
+ 266:	d0 e0       	ldi	r29, 0x00	; 0
+ 268:	02 c0       	rjmp	.+4      	; 0x26e <main+0x100>
+		//Clear Screen
+
+		text1="ieee.concordia.ca\n";	
+		for(int i=0; i<strlen(text1)-1; i++)
+		{
+			screenWrite(text1[i]);
+ 26a:	89 91       	ld	r24, Y+
+ 26c:	1e df       	rcall	.-452    	; 0xaa <screenWrite>
+		screenPos(0);
+
+		//Clear Screen
+
+		text1="ieee.concordia.ca\n";	
+		for(int i=0; i<strlen(text1)-1; i++)
+ 26e:	80 e0       	ldi	r24, 0x00	; 0
+ 270:	c8 3b       	cpi	r28, 0xB8	; 184
+ 272:	d8 07       	cpc	r29, r24
+ 274:	d1 f7       	brne	.-12     	; 0x26a <main+0xfc>
+ 276:	88 e9       	ldi	r24, 0x98	; 152
+ 278:	9a e3       	ldi	r25, 0x3A	; 58
+ 27a:	f8 01       	movw	r30, r16
+ 27c:	31 97       	sbiw	r30, 0x01	; 1
+ 27e:	f1 f7       	brne	.-4      	; 0x27c <main+0x10e>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 280:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 282:	d9 f7       	brne	.-10     	; 0x27a <main+0x10c>
+ 284:	88 e9       	ldi	r24, 0x98	; 152
+ 286:	9a e3       	ldi	r25, 0x3A	; 58
+ 288:	f8 01       	movw	r30, r16
+ 28a:	31 97       	sbiw	r30, 0x01	; 1
+ 28c:	f1 f7       	brne	.-4      	; 0x28a <main+0x11c>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 28e:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 290:	d9 f7       	brne	.-10     	; 0x288 <main+0x11a>
+		{
+			screenWrite(text1[i]);
+		}
+		_delay_ms(sleep1);
+		_delay_ms(sleep1);
+		screenClear();
+ 292:	42 df       	rcall	.-380    	; 0x118 <screenClear>
+		screenPos(0);
+ 294:	80 e0       	ldi	r24, 0x00	; 0
+ 296:	90 e0       	ldi	r25, 0x00	; 0
+ 298:	f2 de       	rcall	.-540    	; 0x7e <screenPos>
+ 29a:	70 cf       	rjmp	.-288    	; 0x17c <main+0xe>
+
+0000029c <_exit>:
+ 29c:	f8 94       	cli
+
+0000029e <__stop_program>:
+ 29e:	ff cf       	rjmp	.-2      	; 0x29e <__stop_program>
